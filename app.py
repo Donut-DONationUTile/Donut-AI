@@ -24,7 +24,7 @@ async def test():
 
 # 모든 이미지 
 @app.post("/api/server/enhancement")
-async def enhancement(giftId: int = Form(...), file: UploadFile = Form(...)):
+async def enhancement(file: UploadFile = Form(...)):
     UPLOAD_DIR = './output'
 
     if file != None:
@@ -43,7 +43,7 @@ async def enhancement(giftId: int = Form(...), file: UploadFile = Form(...)):
     imgUrl = upload_gcs(enhanced_path)
     print("Successfully upload image")
     
-    return {"giftId": giftId, "imageUrl" : imgUrl}
+    return imgUrl
 
 
 
