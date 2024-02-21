@@ -15,6 +15,7 @@ class image_info(BaseModel):
     giftId: int
     image: str
 
+
 @app.get("/")
 async def test():
     i_enhance()
@@ -27,17 +28,15 @@ async def enhancement(request: image_info):
     DOWNLOAD_DIR = './donut-zpe-bucket-v2'
     print("다운로드 진입")
     # 이미지 다운로드
-    download_gcs(request.image)
+    local_path = download_gcs(DOWNLOAD_DIR, request.image)
     print("Successfully download image")
-    # 다운로드한 이미지의 경로
-    local_path = os.path.join(DOWNLOAD_DIR, request.image)
     print(local_path)
     # 이미지 강화
-    # enhanced_path = i_enhance(local_path)
-    # print("Successfully enhance image")
-    # # 강화한 이미지 업로드
-    # imgUrl = upload_gcs(enhanced_path)
-    # print("Successfully upload image")
+    enhanced_path = i_enhance(local_path)
+    print("Successfully enhance image")
+    # 강화한 이미지 업로드
+    imgUrl = upload_gcs(enhanced_path)
+    print("Successfully upload image")
     
     return {"giftId":request.giftId, "imageUrl" : imgUrl}
 
