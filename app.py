@@ -18,7 +18,6 @@ class image_info(BaseModel):
 
 @app.get("/")
 async def test():
-    i_enhance()
     return {"message": "Hello World"}
 
 
@@ -70,4 +69,4 @@ async def enhancement_optional(request: image_info):
 
 if __name__ == '__main__':
     app_str = 'app:app'
-    uvicorn.run(app_str, host='34.64.144.108', port=8000, reload=True, workers=1)
+    uvicorn.run(app_str, host='34.47.72.193', port=8000, reload=True, workers=1)
