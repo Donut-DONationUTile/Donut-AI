@@ -24,7 +24,7 @@ async def test():
 
 # 모든 이미지 
 @app.post("/api/server/enhancement")
-async def enhancement(giftId: int = Form(...), file: UploadFile = Form(...)):
+async def enhancement(file: UploadFile = Form(...)):
     UPLOAD_DIR = './output'
 
     if file != None:
@@ -43,7 +43,7 @@ async def enhancement(giftId: int = Form(...), file: UploadFile = Form(...)):
     imgUrl = upload_gcs(enhanced_path)
     print("Successfully upload image")
     
-    return {"giftId": giftId, "imageUrl" : imgUrl}
+    return imgUrl
 
 
 
@@ -70,4 +70,4 @@ async def enhancement_optional(request: image_info):
 
 if __name__ == '__main__':
     app_str = 'app:app'
-    uvicorn.run(app_str, host='127.0.0.1', port=8000, reload=True, workers=1)
+    uvicorn.run(app_str, host='34.64.144.108', port=8000, reload=True, workers=1)

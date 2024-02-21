@@ -20,7 +20,7 @@ def upload_gcs(enhance_image):
     blob = bucket.blob(enhance_image)
 
     blob.upload_from_filename(enhance_image +".jpg")
-    return "https://storage.googleapis.com/" + bucket_name + "/" + enhance_image+".jpg"
+    return "https://storage.googleapis.com/" + bucket_name + "/" + enhance_image
 
 
 # Download image to Google Cloud Storage
