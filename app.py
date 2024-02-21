@@ -2,7 +2,7 @@ import os
 import uvicorn
 import shutil
 
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Form
 from pydantic import BaseModel
 from img_enhancement import i_enhance
 from upload_img_gcs import download_gcs, upload_gcs
@@ -23,13 +23,17 @@ async def test():
 
 
 # 모든 이미지 
-@app.post("/api/donation/giver/donate")
-async def enhancement(request: image_info):
-    # 이미지 다운로드
-    print("다운로드 진입")
-    local_path = download_gcs(DOWNLOAD_DIR, request.image)
-    print("Successfully download image")
-    print(local_path)
+@app.post("/api/server/enhancement")
+async def enhancement(giftId: int = Form(...), file: UploadFile = Form(...)):
+    UPLOAD_DIR = './output'
+
+    if file != None:
+        os.makedirs(UPLOAD_DIR, exist_ok=True)  # 디렉토리 생성
+        local_path = os.path.normpath(os.path.join(UPLOAD_DIR, file.filename))
+        print("local_path")
+        print(local_path)
+        with open(local_path, 'wb') as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
     # 이미지 강화
     enhanced_path = i_enhance(local_path)
@@ -39,7 +43,7 @@ async def enhancement(request: image_info):
     imgUrl = upload_gcs(enhanced_path)
     print("Successfully upload image")
     
-    return {"giftId":request.giftId, "imageUrl" : imgUrl}
+    return {"giftId": giftId, "imageUrl" : imgUrl}
 
 
 
