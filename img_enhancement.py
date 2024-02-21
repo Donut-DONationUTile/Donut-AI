@@ -1,15 +1,18 @@
 import os
-import time
+import uuid
+
 from PIL import Image
 import tensorflow as tf
 import tensorflow_hub as hub
+
 os.environ["TFHUB_DOWNLOAD_PROGRESS"] = "True"
 
 # Declaring Constants
-IMAGE_PATH = "/Users/kang/Documents/Github/donut-AI/asset/choco_banana.png"
 SAVED_MODEL_PATH = "https://tfhub.dev/captain-pool/esrgan-tf2/1"
+model = hub.load(SAVED_MODEL_PATH)
 
 
+#이미지 전처리
 def preprocess_image(image_path):
   """ Loads image from path and preprocesses to make it model ready
       Args: 
@@ -26,6 +29,7 @@ def preprocess_image(image_path):
   return tf.expand_dims(hr_image, 0)
 
 
+#이미지 저장
 def save_image(image, filename):
   """
     Saves unscaled Tensor Images.
@@ -39,12 +43,20 @@ def save_image(image, filename):
   image.save("%s.jpg" % filename)
   print("Saved as %s.jpg" % filename)
 
-def i_enhance():
-    hr_image = preprocess_image(IMAGE_PATH)
+
+# 이미지 고해상도 
+def i_enhance(image_path):
+    hr_image = preprocess_image(image_path)
     print("done preprocess image")
-    model = hub.load(SAVED_MODEL_PATH)
+
     fake_image = model(hr_image)
-    fake_image = tf.squeeze(fake_image)
-    return print("done image enhancement")
+    print("done enhance image")
+
+    stored_name = str(uuid.uuid4()) 
+    output_path = "output/"+ stored_name 
+    save_image(tf.squeeze(fake_image), filename=output_path) 
+    print("save image")
+
+    return output_path
 
 
