@@ -70,4 +70,4 @@ async def enhancement_optional(request: image_info):
 
 if __name__ == '__main__':
     app_str = 'app:app'
-    uvicorn.run(app_str, host='127.0.0.1', port=8000, reload=True, workers=1)
+    uvicorn.run(app_str, host='34.64.144.108', port=8000, reload=True, workers=1)
