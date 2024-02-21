@@ -9,7 +9,7 @@ from upload_img_gcs import download_gcs, upload_gcs
 
 app = FastAPI()
 
-result_path = "./results"
+DOWNLOAD_DIR = './donut-zpe-bucket-v2'
 
 class image_info(BaseModel):
     giftId: int
@@ -22,18 +22,40 @@ async def test():
     return {"message": "Hello World"}
 
 
-
-@app.post("/api/home/receiver/enhancement")
+# 모든 이미지 
+@app.post("/api/donation/giver/donate")
 async def enhancement(request: image_info):
-    DOWNLOAD_DIR = './donut-zpe-bucket-v2'
-    print("다운로드 진입")
     # 이미지 다운로드
+    print("다운로드 진입")
     local_path = download_gcs(DOWNLOAD_DIR, request.image)
     print("Successfully download image")
     print(local_path)
+
     # 이미지 강화
     enhanced_path = i_enhance(local_path)
     print("Successfully enhance image")
+
+    # 강화한 이미지 업로드
+    imgUrl = upload_gcs(enhanced_path)
+    print("Successfully upload image")
+    
+    return {"giftId":request.giftId, "imageUrl" : imgUrl}
+
+
+
+# 선택된 이미지만 
+@app.post("/api/home/receiver/enhancement")
+async def enhancement_optional(request: image_info):
+    # 이미지 다운로드
+    print("다운로드 진입")
+    local_path = download_gcs(DOWNLOAD_DIR, request.image)
+    print("Successfully download image")
+    print(local_path)
+
+    # 이미지 강화
+    enhanced_path = i_enhance(local_path)
+    print("Successfully enhance image")
+
     # 강화한 이미지 업로드
     imgUrl = upload_gcs(enhanced_path)
     print("Successfully upload image")
