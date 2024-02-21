@@ -1,5 +1,10 @@
 from google.cloud import storage
+from google.oauth2 import service_account
 import uuid
+# # 서비스 계정 인증 정보가 담긴 JSON 파일 경로
+# KEY_PATH = "./config/key.json"
+# # Credentials 객체 생성
+# credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 
 bucket_name = 'donut-zpe-bucket-v2'    
 image = '/Users/kang/Documents/Github/donut-AI/asset/choco_banana.png'    

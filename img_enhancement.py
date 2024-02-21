@@ -1,7 +1,6 @@
 import os
 import time
 from PIL import Image
-import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
 os.environ["TFHUB_DOWNLOAD_PROGRESS"] = "True"
@@ -40,16 +39,12 @@ def save_image(image, filename):
   image.save("%s.jpg" % filename)
   print("Saved as %s.jpg" % filename)
 
+def i_enhance():
+    hr_image = preprocess_image(IMAGE_PATH)
+    print("done preprocess image")
+    model = hub.load(SAVED_MODEL_PATH)
+    fake_image = model(hr_image)
+    fake_image = tf.squeeze(fake_image)
+    return print("done image enhancement")
 
 
-hr_image = preprocess_image(IMAGE_PATH)
-
-# Plotting Original Resolution image
-save_image(tf.squeeze(hr_image), filename="Original Image")
-model = hub.load(SAVED_MODEL_PATH)
-
-fake_image = model(hr_image)
-fake_image = tf.squeeze(fake_image)
-
-# Plotting Super Resolution Image
-save_image(tf.squeeze(fake_image), filename="Super Resolution")
