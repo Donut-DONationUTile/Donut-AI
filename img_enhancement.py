@@ -47,17 +47,17 @@ def save_image(image, filename):
 # 이미지 고해상도 
 def i_enhance(image_path):
     hr_image = preprocess_image(image_path)
-    print("done preprocess image, time: "+ datetime.datetime.now())
+    print("done preprocess image, time: "+ str(datetime.datetime.now()))
 
     model = hub.load(SAVED_MODEL_PATH)
-    print("done load image, time: "+ datetime.datetime.now())
+    print("done load image, time: "+ str(datetime.datetime.now()))
     fake_image = model(hr_image)
-    print("done enhance image, time: "+ datetime.datetime.now())
+    print("done enhance image, time: "+ str(datetime.datetime.now()))
 
     stored_name = str(uuid.uuid4()) 
     output_path = "output/"+ stored_name 
     save_image(tf.squeeze(fake_image), filename=output_path) 
-    print("save image, time: "+ datetime.datetime.now())
+    print("save image, time: "+ str(datetime.datetime.now()))
 
     return output_path
 
