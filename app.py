@@ -1,6 +1,7 @@
 import os 
 import uvicorn
 import shutil
+import datetime
 
 from fastapi import FastAPI, UploadFile, File, Form
 from pydantic import BaseModel
@@ -23,7 +24,9 @@ async def test():
 
 # 모든 이미지 
 @app.post("/api/server/enhancement")
-async def enhancement(file: UploadFile = Form(...)):
+async def enhancement(giftId: int, file: UploadFile = Form(...)):
+    print("Get Image, time : " +  datetime.datetime.now())
+
     UPLOAD_DIR = './output'
 
     if file != None:
@@ -36,13 +39,13 @@ async def enhancement(file: UploadFile = Form(...)):
 
     # 이미지 강화
     enhanced_path = i_enhance(local_path)
-    print("Successfully enhance image")
+    print("Successfully enhance image, time: "+ datetime.datetime.now())
 
     # 강화한 이미지 업로드
     imgUrl = upload_gcs(enhanced_path)
-    print("Successfully upload image")
+    print("Successfully upload image, time: "+ datetime.datetime.now())
     
-    return imgUrl
+    return {"giftId": giftId, "resultUrl": imgUrl}
 
 
 
