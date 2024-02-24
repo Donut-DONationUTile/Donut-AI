@@ -75,9 +75,8 @@ async def enhancement_bucket(request: image_info):
 @app.post("/api/server/enhancement/optional")
 async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(...)):
     print("Get Image, time : " +  str(datetime.datetime.now()))
-    UPLOAD_DIR = './output'
-    # image = request.image
 
+    UPLOAD_DIR = './output'
     if image != None:
         os.makedirs(UPLOAD_DIR, exist_ok=True)  # 디렉토리 생성
         local_path = os.path.normpath(os.path.join(UPLOAD_DIR, image.filename))

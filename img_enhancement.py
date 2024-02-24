@@ -1,6 +1,8 @@
 import os
+import io
 import uuid
 import datetime
+import numpy as np
 
 from PIL import Image
 import tensorflow as tf
@@ -28,6 +30,27 @@ def preprocess_image(image_path):
   hr_image = tf.cast(hr_image, tf.float32)
   return tf.expand_dims(hr_image, 0)
 
+#이미지 전처리2
+def preprocess_image_v2(hr_image):
+  """ Loads image from path and preprocesses to make it model ready
+      Args: 
+        image_path: Path to the image file
+  """
+  # If PNG, remove the alpha channel. The model only supports
+  # images with 3 color channels.
+
+   # PIL 이미지 객체로 변환
+  image = Image.open(io.BytesIO(hr_image))
+  # NumPy 배열로 변환
+  hr_image = np.array(image)
+  print("Successfully download image, time : " +  str(datetime.datetime.now()))
+  
+  if hr_image.shape[-1] == 4:
+    hr_image = hr_image[...,:-1]
+  hr_size = (tf.convert_to_tensor(hr_image.shape[:-1]) // 4) * 4
+  hr_image = tf.image.crop_to_bounding_box(hr_image, 0, 0, hr_size[0], hr_size[1])
+  hr_image = tf.cast(hr_image, tf.float32)
+  return tf.expand_dims(hr_image, 0)
 
 #이미지 저장
 def save_image(image, filename):
