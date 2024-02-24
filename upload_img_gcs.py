@@ -7,7 +7,7 @@ import uuid
 from urllib.parse import urlparse
 
 # # 서비스 계정 인증 정보가 담긴 JSON 파일 경로
-KEY_PATH = "/Users/kang/Documents/Github/donut-AI/adroit-metric-413519-d4e6d7038d34.json"
+KEY_PATH = "adroit-metric-413519-d4e6d7038d34.json"
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=KEY_PATH
 
 bucket_name = 'donut-zpe-bucket-v2'    
