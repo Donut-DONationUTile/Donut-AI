@@ -5,7 +5,7 @@ import datetime
 
 from fastapi import FastAPI, UploadFile, File, Form
 from pydantic import BaseModel
-from img_enhancement import i_enhance
+from model.img_enhancement import i_enhance
 from upload_img_gcs import download_gcs, upload_gcs
 
 app = FastAPI()
