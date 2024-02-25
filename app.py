@@ -101,4 +101,4 @@ async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(..
 
 if __name__ == '__main__':
     app_str = 'app:app'
-    uvicorn.run(app_str, host='0.0.0.0', port=8000, reload=True, workers=1)
+    uvicorn.run(app_str, host='34.47.72.193', port=8000, reload=True, workers=1)
