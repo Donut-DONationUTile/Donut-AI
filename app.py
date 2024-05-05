@@ -98,9 +98,6 @@ async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(..
     return {"giftId":giftId, "imageUrl" : imgUrl}
 
 
-<<<<<<< Updated upstream
-=======
-
 
 # 선택된 것만 강화
 @app.post("/api/server/enhancement/optional/v")
@@ -127,8 +124,6 @@ async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(..
     print("Successfully upload image, time : " + str(datetime.datetime.now()))
     
     return {"giftId":giftId, "imageUrl" : imgUrl}
->>>>>>> Stashed changes
-
 
 
 
