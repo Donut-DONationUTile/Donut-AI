@@ -1,4 +1,5 @@
-## Introduction
+## Introduction 
+
 [![Demo Video](https://github.com/akimcse/akimcse/assets/63237214/3aac2345-cb7c-4037-8ed8-a5fa99ef7fc3)](https://youtu.be/qjlmdKrCPaI)
 
   `DONUT` is a sustainable donation platform tailored to the developmental characteristics of adolescents, providing a stigma-free process for beneficiaries. </br></br>
@@ -28,6 +29,11 @@
 ## Tech Stacks
 ![image](https://github.com/Donut-DONationUTile/.github/assets/90603399/b35af4c6-eaf9-4588-aa71-587d2f13f2f2)
 
+</br></br>
+
+
+## ✨ How to Use DONUT
+<image src='https://github.com/akimcse/akimcse/assets/63237214/845d8d38-2b73-4897-ba63-c45ba32e28d0'/>
 
 </br></br>
 
