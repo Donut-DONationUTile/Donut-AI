@@ -72,8 +72,36 @@ async def enhancement_bucket(request: image_info):
 
 
 
-# 선택된 것만 강화
+
+# actually using function 
 @app.post("/api/server/enhancement/optional")
+async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(...)):
+    print("Get Image, time : " +  str(datetime.datetime.now()))
+
+    UPLOAD_DIR = './output'
+    if image != None:
+        os.makedirs(UPLOAD_DIR, exist_ok=True)  # Create directory
+        local_path = os.path.normpath(os.path.join(UPLOAD_DIR, image.filename))
+        print("local_path")
+        print(local_path)
+        with open(local_path, 'wb') as buffer:
+            shutil.copyfileobj(image.file, buffer)
+    print("Successfully download image, time : " +  str(datetime.datetime.now()))
+
+    # super resolution
+    enhanced_path = i_enhance(local_path)
+    print("Successfully enhance image, time : " + str(datetime.datetime.now()))
+
+    # upload result image to gcs
+    imgUrl = upload_gcs(enhanced_path)
+    print("Successfully upload image, time : " + str(datetime.datetime.now()))
+    
+    return {"giftId":giftId, "imageUrl" : imgUrl}
+
+
+
+# 선택된 것만 강화
+@app.post("/api/server/enhancement/optional/v")
 async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(...)):
     print("Get Image, time : " +  str(datetime.datetime.now()))
 
@@ -86,9 +114,10 @@ async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(..
         with open(local_path, 'wb') as buffer:
             shutil.copyfileobj(image.file, buffer)
     print("Successfully download image, time : " +  str(datetime.datetime.now()))
-
+    #탬플릿
+    #barcode = cv2.imread('./templete/only_barcode.png')
     # 이미지 강화
-    enhanced_path = i_enhance(local_path)
+    enhanced_path = i_enhance('./templete/only_barcode.png')
     print("Successfully enhance image, time : " + str(datetime.datetime.now()))
 
     # 강화한 이미지 업로드
@@ -123,7 +152,6 @@ async def enhancement_optional(giftId: int = Form(), image: UploadFile = File(..
     print("Successfully upload image, time : " + str(datetime.datetime.now()))
     
     return {"giftId":giftId, "imageUrl" : imgUrl}
-
 
 if __name__ == '__main__':
     app_str = 'app:app'
